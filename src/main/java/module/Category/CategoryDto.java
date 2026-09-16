@@ -1,10 +1,14 @@
 package module.Category;
 
+import java.time.LocalDateTime;
+
 public class CategoryDto {
 
     Long id;
 
     String name;
+
+    private LocalDateTime createdAt;
 
     public CategoryDto() {
     }
@@ -27,6 +31,19 @@ public class CategoryDto {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @Override
+    public String toString() {
+        return "CategoryDto [id=" + id + ", name=" + name + ", createdAt=" + createdAt + "]";
     }
 
 }

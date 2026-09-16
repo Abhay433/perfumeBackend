@@ -16,16 +16,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import comman.response.ApiResponse;
+import comman.response.PagedResponse;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping({"/api/admin/products", "/api/products"})
+@RequestMapping({ "/api/admin/products", "/api/products" })
 public class ProductController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductController.class);
 
     @Autowired
     ProductService productService;
+
+    @PostMapping("/list")
+    public ResponseEntity<PagedResponse<ProductDto>> filterProduct(@RequestBody ProductFilterRequest request) {
+        LOGGER.debug("filterProduct endpoint called");
+        PagedResponse<ProductDto> response = productService.filterProduct(request);
+        return ResponseEntity.ok(response);
+    }
 
     @PostMapping("/addorUpdate")
     public ResponseEntity<ApiResponse<ProductDto>> addorUpdate(@Valid @RequestBody ProductDto requestProductDto) {
@@ -36,14 +44,14 @@ public class ProductController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<ApiResponse<ProductDto>> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<ProductDto>> delete(@PathVariable("id") Long id) {
         LOGGER.info("Product deletion attempt for id: {}", id);
         productService.delete(id);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(ApiResponse.success("Product deleted successfully", null));
     }
 
-    @GetMapping({"", "/getAllProducts"})
+    @GetMapping({ "", "/getAllProducts" })
     public ResponseEntity<ApiResponse<List<ProductDto>>> getAllProducts() {
         LOGGER.info("Product getAllProducts attempt");
         List<ProductDto> products = productService.getAllProducts();

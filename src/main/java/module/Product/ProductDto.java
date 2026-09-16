@@ -28,6 +28,16 @@ public class ProductDto {
     @Positive(message = "Stock quantity must be positive")
     private Long stock_quantity;
 
+    private String concentration;
+
+    private String gender;
+
+    private String imageUrl;
+
+    private String notes;
+
+    private String volume;
+
     public ProductDto() {
     }
 
@@ -77,6 +87,46 @@ public class ProductDto {
 
     public void setStock_quantity(Long stock_quantity) {
         this.stock_quantity = stock_quantity;
+    }
+
+    public String getConcentration() {
+        return concentration;
+    }
+
+    public void setConcentration(String concentration) {
+        this.concentration = concentration;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public String getVolume() {
+        return volume;
+    }
+
+    public void setVolume(String volume) {
+        this.volume = volume;
     }
 
     @Override

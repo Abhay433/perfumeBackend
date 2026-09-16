@@ -80,7 +80,18 @@ public class SecurityConfig {
                                                 .requestMatchers(HttpMethod.GET, "/api/admin/products",
                                                                 "/api/admin/products/**")
                                                 .permitAll()
-                                                .requestMatchers("/api/admin/**", "/api/v1/admin/**")
+                                                .requestMatchers(HttpMethod.POST, "/api/products/list",
+                                                                "/api/admin/products/list")
+                                                .permitAll()
+                                                .requestMatchers(HttpMethod.POST, "/api/categories/list",
+                                                                "/api/admin/categories/list")
+                                                .permitAll()
+                                                .requestMatchers(HttpMethod.GET, "/api/admin/dashboard",
+                                                                "/api/admin/dashboard/**", "/api/dashboard", "/api/dashboard/**")
+                                                .permitAll()
+                                                .requestMatchers("/api/admin/**", "/api/v1/admin/**",
+                                                                "/api/products/addorUpdate", "/api/products/delete/**",
+                                                                "/api/categories/addorUpdate", "/api/categories/delete/**")
                                                 .hasAnyRole("ADMIN", "SUPER_ADMIN")
                                                 .anyRequest().authenticated())
                                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

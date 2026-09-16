@@ -16,16 +16,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import comman.response.ApiResponse;
+import comman.response.PagedResponse;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping({"/api/admin/categories", "/api/categories"})
+@RequestMapping({ "/api/admin/categories", "/api/categories" })
 public class CategoryController {
 
     @Autowired
     CategoryService CategoryService;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryController.class);
+
+    @PostMapping("/list")
+    public ResponseEntity<PagedResponse<CategoryDto>> filterCategory(@RequestBody CategoryFilterRequest request) {
+        LOGGER.debug("filterCategory endpoint called");
+        PagedResponse<CategoryDto> response = CategoryService.filterCategory(request);
+        return ResponseEntity.ok(response);
+    }
 
     @PostMapping("/addorUpdate")
     public ResponseEntity<ApiResponse<CategoryDto>> addorUpdate(@Valid @RequestBody CategoryDto requestDto) {
@@ -44,7 +52,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<ApiResponse<CategoryDto>> delete(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<CategoryDto>> delete(@PathVariable("id") Long id) {
         LOGGER.info("Category deletion attempt for id: {}", id);
         CategoryService.delete(id);
         return ResponseEntity.status(HttpStatus.OK)
